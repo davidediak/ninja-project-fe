@@ -44,6 +44,24 @@ const StyledPrimaryButtonGroup = styled(Button)`
   }
 `;
 
+const StyledIcon = styled.img`
+  && {
+    margin-right: 26px;
+  }
+`;
+
+const StyledDropText = styled.div`
+  && {
+    text-align: center;
+    padding-top: 20px;
+    color: #161616;
+  }
+`;
+
+const encrypt = (file: File) => {
+  const key = Math.random.toString;
+};
+
 export default function InputDrop() {
   const handleDrop = (accptedFiles: File[]) => {
     setFileUploaded(accptedFiles[0]);
@@ -52,6 +70,7 @@ export default function InputDrop() {
   const handleUploadClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     console.info(`Uploaded `);
+    encrypt(fileUploaded);
   };
 
   const [fileUploaded, setFileUploaded] = useState<File>(null);
@@ -65,15 +84,20 @@ export default function InputDrop() {
                 <input {...getInputProps()} />
                 {!fileUploaded ? (
                   <Fragment>
-                    <StyledButtonGroup variant="contained">
-                      <StyledPrimaryButtonGroup>
-                        <img src={filesIcon} alt="files icon" />
-                        {`Uz##'w2x{ w3`}
-                      </StyledPrimaryButtonGroup>
-                      <Button size="small" onClick={handleUploadClick}>
-                        <ArrowDropDownIcon />
-                      </Button>
-                    </StyledButtonGroup>
+                    <div>
+                      <StyledButtonGroup variant="contained">
+                        <StyledPrimaryButtonGroup>
+                          <StyledIcon src={filesIcon} alt="files icon" />
+                          {`Uz##'w2x{ w3`}
+                        </StyledPrimaryButtonGroup>
+                        <Button size="small" onClick={handleUploadClick}>
+                          <ArrowDropDownIcon />
+                        </Button>
+                      </StyledButtonGroup>
+                      <StyledDropText>
+                        <span>or drop files here</span>
+                      </StyledDropText>
+                    </div>
                   </Fragment>
                 ) : (
                   fileUploaded?.name
