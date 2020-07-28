@@ -1,20 +1,43 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {ReducersStates} from '../redux/types';
+const aes256 = require('aes256');
 
 const StyledPrimaryButtonGroup = styled(Button)`
   && {
-    backgrould-color: red;
+    background: #009eff;
+    border-radius: 3px;
+    text-align: center;
+    color: #ffffff;
+    width: 168px;
+    height: 48px;
   }
 `;
 
+const encrypt = (file: File) => {
+  const key = Math.random().toString();
+  const reader = new FileReader();
+  reader.readAsText(file, 'UTF-8');
+  reader.onload = evt => {
+    const encrypted = aes256.encrypt(key, evt.target.result);
+    var decrypted = aes256.decrypt(key, encrypted);
+    console.log('encr: ', encrypted, 'dectr: ', decrypted);
+  };
+};
+
 export default function EncryptButton() {
+  const dispatch = useDispatch();
   const disabled = useSelector<ReducersStates, boolean>(state => state.UI.disabled);
+  const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.fileUploaded);
+
+  const handleClick = () => {
+    if (fileUploaded) encrypt(fileUploaded);
+  };
   return (
     <div>
-      <StyledPrimaryButtonGroup disabled={disabled} variant="contained">
+      <StyledPrimaryButtonGroup disabled={disabled} onClick={handleClick} variant="contained">
         Encrypt
       </StyledPrimaryButtonGroup>
     </div>

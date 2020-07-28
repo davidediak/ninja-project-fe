@@ -1,13 +1,12 @@
-import React, {useState, Fragment} from 'react';
-import Dropzone from 'react-dropzone';
-import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import React, {Fragment, useState} from 'react';
+import Dropzone from 'react-dropzone';
+import {useDispatch} from 'react-redux';
+import styled from 'styled-components';
 import filesIcon from '../assets/Files.svg';
-import { useDispatch } from "react-redux";
-import { ENABLE_ENCRYPT_BUTTON } from '../redux/types';
-const aes256 = require('aes256');
+import {ENABLE_ENCRYPT_BUTTON} from '../redux/types';
 
 const StyledSection = styled.section`
   && {
@@ -61,28 +60,16 @@ const StyledDropText = styled.div`
   }
 `;
 
-const encrypt = (file: File) => {
-  const key = Math.random().toString();
-  const reader = new FileReader();
-  reader.readAsText(file, 'UTF-8');
-  reader.onload = evt => {
-    const encrypted = aes256.encrypt(key, evt.target.result);
-    var decrypted = aes256.decrypt(key, encrypted);
-    console.log('encr: ', encrypted, 'dectr: ', decrypted);
-  };
-};
-
 export default function InputDrop() {
   const dispatch = useDispatch();
-  
+
   const handleDrop = (accptedFiles: File[]) => {
     setFileUploaded(accptedFiles[0]);
-    dispatch({type: ENABLE_ENCRYPT_BUTTON})
   };
 
   const handleUploadClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (fileUploaded) encrypt(fileUploaded);
+    if (fileUploaded) dispatch({type: ENABLE_ENCRYPT_BUTTON, payload: {fileUploaded}});
   };
 
   const [fileUploaded, setFileUploaded] = useState<File>(null);

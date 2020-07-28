@@ -5,13 +5,30 @@ import InputDrop from './components/InputDrop';
 import EncryptButton from './components/EncryptButton';
 import {Provider} from 'react-redux';
 import store from './redux/store';
+import styled from 'styled-components';
+import DecryptButton from './components/DecryptButton';
+
+const ButtonContainer = styled.section`
+  && {
+    display: flex;
+    justify-content: center;
+    margin-top: 56px;
+
+    & > div {
+      margin-right: 24px;
+    }
+  }
+`;
 function App() {
   return (
     <Provider store={store}>
       <div>
         <Navbar />
         <InputDrop />
-        <EncryptButton />
+        <ButtonContainer>
+          <EncryptButton />
+          <DecryptButton />
+        </ButtonContainer>
       </div>
     </Provider>
   );
