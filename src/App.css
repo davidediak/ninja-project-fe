@@ -4,5 +4,8 @@ body {
   font-size: 16px;
   font-style: normal;
   font-weight: normal;
-  background-color: rgb(245, 245, 245);
+  background-color: #161616;
+  /* TODO improve*/
+  color: white;
+  margin-top: 100px;
 }
