@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import filesIcon from '../assets/Files.svg';
+import { useDispatch } from "react-redux";
+import { ENABLE_ENCRYPT_BUTTON } from '../redux/types';
 const aes256 = require('aes256');
 
 const StyledSection = styled.section`
@@ -71,8 +73,11 @@ const encrypt = (file: File) => {
 };
 
 export default function InputDrop() {
+  const dispatch = useDispatch();
+  
   const handleDrop = (accptedFiles: File[]) => {
     setFileUploaded(accptedFiles[0]);
+    dispatch({type: ENABLE_ENCRYPT_BUTTON})
   };
 
   const handleUploadClick = (e: React.MouseEvent) => {
