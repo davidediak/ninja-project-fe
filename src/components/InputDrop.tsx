@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import filesIcon from '../assets/Files.svg';
+const aes256 = require('aes256');
 
 const StyledSection = styled.section`
   && {
@@ -59,7 +60,14 @@ const StyledDropText = styled.div`
 `;
 
 const encrypt = (file: File) => {
-  const key = Math.random.toString;
+  const key = Math.random().toString();
+  const reader = new FileReader();
+  reader.readAsText(file, 'UTF-8');
+  reader.onload = evt => {
+    const encrypted = aes256.encrypt(key, evt.target.result);
+    var decrypted = aes256.decrypt(key, encrypted);
+    console.log('encr: ', encrypted, 'dectr: ', decrypted);
+  };
 };
 
 export default function InputDrop() {
@@ -69,8 +77,7 @@ export default function InputDrop() {
 
   const handleUploadClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.info(`Uploaded `);
-    encrypt(fileUploaded);
+    if (fileUploaded) encrypt(fileUploaded);
   };
 
   const [fileUploaded, setFileUploaded] = useState<File>(null);
@@ -82,13 +89,13 @@ export default function InputDrop() {
             <StyledDropzoneContainer>
               <StyledInputContainer {...getRootProps()}>
                 <input {...getInputProps()} />
-                {!fileUploaded ? (
+                {
                   <Fragment>
                     <div>
                       <StyledButtonGroup variant="contained">
                         <StyledPrimaryButtonGroup>
                           <StyledIcon src={filesIcon} alt="files icon" />
-                          {`Uz##'w2x{ w3`}
+                          {!fileUploaded ? `Uz##'w2x{ w3` : fileUploaded?.name}
                         </StyledPrimaryButtonGroup>
                         <Button size="small" onClick={handleUploadClick}>
                           <ArrowDropDownIcon />
@@ -99,9 +106,7 @@ export default function InputDrop() {
                       </StyledDropText>
                     </div>
                   </Fragment>
-                ) : (
-                  fileUploaded?.name
-                )}
+                }
               </StyledInputContainer>
             </StyledDropzoneContainer>
           </StyledSection>
