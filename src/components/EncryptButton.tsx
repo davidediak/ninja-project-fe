@@ -28,9 +28,9 @@ export default function EncryptButton() {
     reader.onload = evt => {
       const encrypted = aes256.encrypt(key, evt.target.result);
       var decrypted = aes256.decrypt(key, encrypted);
-      console.log('encr: ', encrypted, 'dectr: ', decrypted);
+      console.log('encr: ', encrypted, 'dectr: ', decrypted, 'key', key);
       const fileEncrypted = new File([encrypted], file.name, {type: file.type});
-      dispatch({type: DO_ENCRYPT, payload: {fileEncrypted}});
+      dispatch({type: DO_ENCRYPT, payload: {encryption: {fileEncrypted, key}}});
     };
   };
 
