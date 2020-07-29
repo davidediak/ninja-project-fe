@@ -1,10 +1,8 @@
-import React, {useState, ChangeEvent, Fragment} from 'react';
 import Button from '@material-ui/core/Button';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import {useSelector, useDispatch} from 'react-redux';
-import {ReducersStates, DO_DECRYPT} from '../redux/types';
-import {TextField} from '@material-ui/core';
-const aes256 = require('aes256');
+import {DO_DECRYPT, ReducersStates} from '../redux/types';
 
 const StyledPrimaryButtonGroup = styled(Button)`
   && {
@@ -17,45 +15,15 @@ const StyledPrimaryButtonGroup = styled(Button)`
   }
 `;
 
-const StyledTextField = styled(TextField)`
-  && {
-    background: #292929;
-    border: 1px solid #363636;
-    box-sizing: border-box;
-    border-radius: 3px;
-
-    & > div {
-      padding: 0px;
-      color: #ffffff;
-    }
-  }
-`;
-
 export default function DecryptButton() {
   const dispatch = useDispatch();
   const disabled = useSelector<ReducersStates, boolean>(state => state.UI.disabled);
   const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.fileUploaded);
-  const [key, setKey] = useState('');
-
-  const decrypt = (file: File, key: string) => {
-    const reader = new FileReader();
-    reader.readAsText(file, 'UTF-8');
-    reader.onload = evt => {
-      const decrypted = aes256.decrypt(key, evt.target.result);
-      const fileDecrypted = new File([decrypted], file.name, {type: file.type});
-      console.log(decrypted);
-      dispatch({type: DO_DECRYPT, payload: {decryption: {fileDecrypted, key}}});
-    };
-  };
 
   const handleClick = () => {
-    if (fileUploaded && key?.length > 0) {
-       decrypt(fileUploaded, key);
+    if (fileUploaded) {
+      dispatch({type: DO_DECRYPT, payload: {decryption: {fileToDecrypt: fileUploaded}}});
     }
-  };
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setKey(event.target.value);
   };
 
   return (
@@ -65,13 +33,6 @@ export default function DecryptButton() {
           Decrypt
         </StyledPrimaryButtonGroup>
       </div>
-      {fileUploaded ? (
-        <div>
-          <StyledTextField variant="outlined" id="key" value={key} onChange={onChange} />
-        </div>
-      ) : (
-        <Fragment></Fragment>
-      )}
     </div>
   );
 }
