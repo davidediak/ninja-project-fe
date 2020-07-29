@@ -57,15 +57,15 @@ export default function PostDecryption() {
 
   const handleDownloadClick = () => {
     if (fileToDecrypt && key) {
-      decrypt(fileToDecrypt, key);
+      decrypt(fileToDecrypt, atob(key));
     }
   };
 
-  const decrypt = (file: File, key: string) => {
+  const decrypt = (file: File, keyDecoded: string) => {
     const reader = new FileReader();
     reader.readAsText(file, 'UTF-8');
     reader.onload = evt => {
-      const decrypted = aes256.decrypt(key, evt.target.result);
+      const decrypted = aes256.decrypt(keyDecoded, evt.target.result);
       const fileToDecrypt = new File([decrypted], file.name, {type: file.type});
       download(fileToDecrypt);
     };

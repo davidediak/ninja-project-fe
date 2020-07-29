@@ -3,6 +3,7 @@ import React, {Fragment} from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {ReducersStates} from '../redux/types';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 const ButtonContainer = styled.section`
   && {
@@ -57,6 +58,7 @@ export default function PostEncryption() {
   const {fileEncrypted, key} = useSelector<ReducersStates, {fileEncrypted: File; key: string}>(
     state => state.UI.encryption
   );
+  const keyEncoded = btoa(key);
 
   const handleDownloadClick = () => {
     if (fileEncrypted) {
@@ -75,9 +77,15 @@ export default function PostEncryption() {
         <StyledTextField
           variant="outlined"
           id="key"
-          value={key}
+          value={keyEncoded}
           disabled={true}
-          InputProps={{endAdornment: <StyledCopyButton>Copy</StyledCopyButton>}}
+          InputProps={{
+            endAdornment: (
+              <CopyToClipboard text={keyEncoded}>
+                <StyledCopyButton>Copy</StyledCopyButton>
+              </CopyToClipboard>
+            ),
+          }}
         />
       </ButtonContainer>
       <ButtonContainer>
