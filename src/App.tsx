@@ -15,7 +15,7 @@ const ButtonContainer = styled.section`
     margin-top: 56px;
 
     & > div {
-      margin-right: 24px;
+      padding: 0 12px 0 12px;
     }
   }
 `;

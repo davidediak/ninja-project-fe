@@ -60,19 +60,32 @@ const StyledDropText = styled.div`
   }
 `;
 
+const UploadedDiv = styled.div`
+  && {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const StyledIconUploaded = styled.img`
+  && {
+    width: 38px;
+    height: 44px;
+  }
+`;
+
 export default function InputDrop() {
   const dispatch = useDispatch();
+  const [fileUploaded, setFileUploaded] = useState<File>(null);
 
   const handleDrop = (accptedFiles: File[]) => {
-    setFileUploaded(accptedFiles[0]);
+    const fileUploaded = accptedFiles[0];
+    if (fileUploaded) {
+      setFileUploaded(fileUploaded);
+      dispatch({type: ENABLE_ENCRYPT_BUTTON, payload: {fileUploaded}});
+    }
   };
-
-  const handleUploadClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (fileUploaded) dispatch({type: ENABLE_ENCRYPT_BUTTON, payload: {fileUploaded}});
-  };
-
-  const [fileUploaded, setFileUploaded] = useState<File>(null);
   return (
     <Fragment>
       <Dropzone onDrop={handleDrop} multiple={false}>
@@ -83,20 +96,29 @@ export default function InputDrop() {
                 <input {...getInputProps()} />
                 {
                   <Fragment>
-                    <div>
-                      <StyledButtonGroup variant="contained">
-                        <StyledPrimaryButtonGroup>
-                          <StyledIcon src={filesIcon} alt="files icon" />
-                          {!fileUploaded ? `Uz##'w2x{ w3` : fileUploaded?.name}
-                        </StyledPrimaryButtonGroup>
-                        <Button size="small" onClick={handleUploadClick}>
-                          <ArrowDropDownIcon />
-                        </Button>
-                      </StyledButtonGroup>
-                      <StyledDropText>
-                        <span>or drop files here</span>
-                      </StyledDropText>
-                    </div>
+                    {!fileUploaded ? (
+                      <div>
+                        <StyledButtonGroup variant="contained">
+                          <StyledPrimaryButtonGroup>
+                            <StyledIcon src={filesIcon} alt="files icon" />
+                            {`Uz##'w2x{ w3`}
+                          </StyledPrimaryButtonGroup>
+                          <Button size="small">
+                            <ArrowDropDownIcon />
+                          </Button>
+                        </StyledButtonGroup>
+                        <StyledDropText>
+                          <span>or drop files here</span>
+                        </StyledDropText>
+                      </div>
+                    ) : (
+                      <UploadedDiv>
+                        <StyledIconUploaded src={filesIcon} alt="files icon" />
+                        <StyledDropText>
+                          <span>{fileUploaded?.name}</span>
+                        </StyledDropText>
+                      </UploadedDiv>
+                    )}
                   </Fragment>
                 }
               </StyledInputContainer>
