@@ -7,6 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import styled from 'styled-components';
+import {useDispatch} from 'react-redux';
+import {DO_RESET} from '../redux/types';
 type Language = 'Encrypted' | `W"y {'z`;
 const StyledToggleButton = styled(ToggleButton)`
   && {
@@ -33,7 +35,14 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
     margin-right: 11.1111111111%;
   }
 `;
+
+const StyledLogo = styled.img`
+  && {
+    cursor: pointer;
+  }
+`;
 export default function Navbar() {
+  const dispatch = useDispatch();
   const langauges: Language[] = ['Encrypted', `W"y {'z`];
   const [langauge, setLanguage] = React.useState(langauges[0]);
 
@@ -43,11 +52,15 @@ export default function Navbar() {
     }
   };
 
+  const doReset = () => {
+    dispatch({type: DO_RESET});
+  };
+
   return (
     <AppBar style={{background: '#292929'}}>
       <Toolbar className="nav-container">
         <Fragment>
-          <img src={logo} alt="" />
+          <StyledLogo onClick={doReset} src={logo} alt="" />
           <StyledToggleButtonGroup value={langauge} exclusive onChange={handleLanguage}>
             <StyledToggleButton value={langauges[0]}>{langauges[0]}</StyledToggleButton>
             <StyledToggleButton value={langauges[1]}>{langauges[1]}</StyledToggleButton>

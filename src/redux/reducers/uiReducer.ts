@@ -1,4 +1,4 @@
-import {ENABLE_ENCRYPT_BUTTON, DO_ENCRYPT, UIState} from '../types';
+import {ENABLE_ENCRYPT_BUTTON, DO_ENCRYPT, UIState, DO_RESET} from '../types';
 
 const initialState: UIState = {
   disabled: true,
@@ -15,6 +15,8 @@ export default function (state = initialState, action: any) {
       return {...state, disabled: false, fileUploaded: action.payload.fileUploaded};
     case DO_ENCRYPT:
       return {...state, encryption: action.payload.encryption};
+      case DO_RESET:
+        return {...initialState};
     default:
       return state;
   }
