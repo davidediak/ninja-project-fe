@@ -8,6 +8,7 @@ const aes256 = require('aes256');
 
 const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
   && {
+    padding: 20px;
     background: #ffa047;
   }
 `;

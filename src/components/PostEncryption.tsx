@@ -1,10 +1,9 @@
-import {Button} from '@material-ui/core';
 import React, {Fragment} from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {ReducersStates} from '../redux/types';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {ButtonContainer, StyledPrimaryButtonGroup, StyledTextField} from './styled-components';
+import {ButtonContainer, StyledPrimaryButtonGroup, StyledTextField, StyledBasedButton} from './styled-components';
 
 const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
 && {
@@ -12,12 +11,11 @@ const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
 }
 `;
 
-const StyledCopyButton = styled(Button)`
+const StyledCopyButton = styled(StyledBasedButton)`
   && {
     background: #009eff;
-    border-radius: 3px;
-    text-align: center;
-    color: #ffffff;
+    width: 116px;
+    height: 36px;
   }
 `;
 
