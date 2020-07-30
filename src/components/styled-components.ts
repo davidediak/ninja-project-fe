@@ -1,10 +1,22 @@
 import styled from 'styled-components';
 import {Button, TextField} from '@material-ui/core';
 
-export const ButtonContainer = styled.section`
+export const StyledSection = styled.section`
   && {
     display: flex;
     justify-content: center;
+  }
+`;
+
+export const StyledSectionColFlex = styled(StyledSection)`
+  && {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const ButtonContainer = styled(StyledSection)`
+  && {
     margin-top: 56px;
 
     & > div {

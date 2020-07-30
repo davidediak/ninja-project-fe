@@ -8,5 +8,8 @@ body {
   background-color: #161616;
   /* TODO improve*/
   color: white;
-  margin-top: 100px;
+}
+
+body {
+  margin-top: calc(216px - 8px);
 }

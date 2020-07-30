@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {ReducersStates} from '../redux/types';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {ButtonContainer, StyledPrimaryButtonGroup, StyledTextField, StyledBasedButton} from './styled-components';
+import {ButtonContainer, StyledPrimaryButtonGroup, StyledTextField, StyledBasedButton, StyledSectionColFlex} from './styled-components';
 
 const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
 && {
@@ -38,7 +38,10 @@ export default function PostEncryption() {
   };
   return (
     <Fragment>
-      <ButtonContainer>
+      <StyledSectionColFlex>
+        <p>
+        Your encryption key:
+        </p>
         <StyledTextField
           variant="outlined"
           id="key"
@@ -52,7 +55,7 @@ export default function PostEncryption() {
             ),
           }}
         />
-      </ButtonContainer>
+      </StyledSectionColFlex>
       <ButtonContainer>
         <CustStyledPrimaryButtonGroup onClick={handleDownloadClick}>
           Download

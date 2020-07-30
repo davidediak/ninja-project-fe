@@ -2,9 +2,13 @@ import React, {ChangeEvent, Fragment, useState} from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {ReducersStates} from '../redux/types';
-import { ButtonContainer, StyledPrimaryButtonGroup, StyledTextField } from './styled-components';
+import {
+  ButtonContainer,
+  StyledPrimaryButtonGroup,
+  StyledTextField,
+  StyledSectionColFlex,
+} from './styled-components';
 const aes256 = require('aes256');
-
 
 const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
   && {
@@ -51,9 +55,10 @@ export default function PostDecryption() {
 
   return (
     <Fragment>
-      <ButtonContainer>
+      <StyledSectionColFlex>
+        <p>Insert your key:</p>
         <StyledTextField variant="outlined" id="key" value={key} onChange={onChange} />
-      </ButtonContainer>
+      </StyledSectionColFlex>
       <ButtonContainer>
         <CustStyledPrimaryButtonGroup onClick={handleDownloadClick}>
           Decrypt and download

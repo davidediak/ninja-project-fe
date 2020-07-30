@@ -7,13 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import filesIcon from '../assets/Files.svg';
 import {ENABLE_ENCRYPT_BUTTON, ReducersStates} from '../redux/types';
+import { StyledSection } from './styled-components';
 
-const StyledSection = styled.section`
-  && {
-    display: flex;
-    justify-content: center;
-  }
-`;
 const StyledDropzoneContainer = styled.div`
   && {
     max-width: 936px;
