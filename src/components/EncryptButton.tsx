@@ -1,18 +1,13 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 import {useSelector, useDispatch} from 'react-redux';
 import {ReducersStates, DO_ENCRYPT} from '../redux/types';
+import {StyledPrimaryButtonGroup} from './styled-components';
 const aes256 = require('aes256');
 
-const StyledPrimaryButtonGroup = styled(Button)`
+const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
   && {
     background: #009eff;
-    border-radius: 3px;
-    text-align: center;
-    color: #ffffff;
-    width: 168px;
-    height: 48px;
   }
 `;
 
@@ -39,9 +34,9 @@ export default function EncryptButton() {
   };
   return (
     <div>
-      <StyledPrimaryButtonGroup disabled={disabled} onClick={handleClick} variant="contained">
+      <CustStyledPrimaryButtonGroup disabled={disabled} onClick={handleClick} variant="contained">
         Encrypt
-      </StyledPrimaryButtonGroup>
+      </CustStyledPrimaryButtonGroup>
     </div>
   );
 }

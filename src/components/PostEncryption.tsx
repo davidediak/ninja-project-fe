@@ -1,48 +1,15 @@
-import {Button, TextField} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import React, {Fragment} from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {ReducersStates} from '../redux/types';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import {ButtonContainer, StyledPrimaryButtonGroup, StyledTextField} from './styled-components';
 
-const ButtonContainer = styled.section`
-  && {
-    display: flex;
-    justify-content: center;
-    margin-top: 56px;
-
-    & > div {
-      padding: 0 12px 0 12px;
-    }
-  }
-`;
-
-const StyledPrimaryButtonGroup = styled(Button)`
-  && {
-    background: #ffa047;
-    border-radius: 3px;
-    text-align: center;
-    width: 168px;
-    height: 48px;
-  }
-`;
-
-const StyledTextField = styled(TextField)`
-  && {
-    background: #292929;
-    border: 1px solid #363636;
-    box-sizing: border-box;
-    border-radius: 3px;
-
-    & > div {
-      padding: 0px;
-      color: #ffffff;
-
-      & > fieldset {
-        border: 0px;
-      }
-    }
-  }
+const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
+&& {
+  background: #ffa047;
+}
 `;
 
 const StyledCopyButton = styled(Button)`
@@ -89,7 +56,9 @@ export default function PostEncryption() {
         />
       </ButtonContainer>
       <ButtonContainer>
-        <StyledPrimaryButtonGroup onClick={handleDownloadClick}>Download</StyledPrimaryButtonGroup>
+        <CustStyledPrimaryButtonGroup onClick={handleDownloadClick}>
+          Download
+        </CustStyledPrimaryButtonGroup>
       </ButtonContainer>
     </Fragment>
   );
