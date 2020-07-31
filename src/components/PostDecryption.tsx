@@ -66,6 +66,13 @@ export default function PostDecryption() {
     document.body.removeChild(el);
   };
 
+  const handleSnackbarClose = (event: any, reason: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setError({...error, open: false});
+  };
+
   return (
     <Fragment>
       <StyledSectionColFlex>
@@ -77,12 +84,7 @@ export default function PostDecryption() {
           Decrypt and download
         </CustStyledPrimaryButtonGroup>
       </ButtonContainer>
-      <Snackbar
-        open={error.open}
-        autoHideDuration={4000}
-        onClose={() => {
-          setError({...error, open: false});
-        }}>
+      <Snackbar open={error.open} autoHideDuration={4000} onClose={handleSnackbarClose}>
         <Alert severity="error">{error.message}</Alert>
       </Snackbar>
     </Fragment>

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, Dispatch} from 'react';
 import logo from '../assets/logo.svg';
 
 //MUI
@@ -8,7 +8,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import styled from 'styled-components';
 import {useDispatch} from 'react-redux';
-import {DO_RESET} from '../redux/types';
+import {DO_RESET, UiActionTypes} from '../redux/types';
 type Language = 'Encrypted' | `W"y {'z`;
 const StyledToggleButton = styled(ToggleButton)`
   && {
@@ -42,7 +42,7 @@ const StyledLogo = styled.img`
   }
 `;
 export default function Navbar() {
-  const dispatch = useDispatch();
+  const dispatch: Dispatch<UiActionTypes> = useDispatch();
   const langauges: Language[] = ['Encrypted', `W"y {'z`];
   const [langauge, setLanguage] = React.useState(langauges[0]);
 

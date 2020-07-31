@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {Dispatch} from 'react';
 import styled from 'styled-components';
 import {useSelector, useDispatch} from 'react-redux';
-import {ReducersStates, DO_ENCRYPT} from '../redux/types';
+import {ReducersStates, DO_ENCRYPT, UiActionTypes} from '../redux/types';
 import {StyledPrimaryButtonGroup} from './styled-components';
 const aes256 = require('aes256');
 
@@ -12,9 +12,9 @@ const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
 `;
 
 export default function EncryptButton() {
-  const dispatch = useDispatch();
-  const disabled = useSelector<ReducersStates, boolean>(state => state.UI.disabled);
-  const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.fileUploaded);
+  const dispatch: Dispatch<UiActionTypes> = useDispatch();
+  const disabled = useSelector<ReducersStates, boolean>(state => state.UI.mainUI.disabled);
+  const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.mainUI.fileUploaded);
 
   const encrypt = (file: File) => {
     const key = Math.random().toString();
@@ -23,7 +23,7 @@ export default function EncryptButton() {
     reader.onload = evt => {
       const encrypted = aes256.encrypt(key, evt.target.result);
       const fileEncrypted = new File([encrypted], file.name, {type: file.type});
-      dispatch({type: DO_ENCRYPT, payload: {encryption: {fileEncrypted, key}}});
+      dispatch({type: DO_ENCRYPT, payload: {fileEncrypted, key}});
     };
   };
 

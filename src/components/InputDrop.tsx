@@ -1,13 +1,13 @@
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import React, {Fragment} from 'react';
+import React, {Fragment, Dispatch} from 'react';
 import Dropzone from 'react-dropzone';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import filesIcon from '../assets/Files.svg';
-import {ENABLE_ENCRYPT_BUTTON, ReducersStates} from '../redux/types';
-import { StyledSection } from './styled-components';
+import {ENABLE_BUTTONS, ReducersStates, UiActionTypes} from '../redux/types';
+import {StyledSection} from './styled-components';
 
 const StyledDropzoneContainer = styled.div`
   && {
@@ -71,13 +71,13 @@ const StyledIconUploaded = styled.img`
 `;
 
 export default function InputDrop() {
-  const dispatch = useDispatch();
-  const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.fileUploaded);
+  const dispatch: Dispatch<UiActionTypes> = useDispatch();
+  const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.mainUI.fileUploaded);
 
   const handleDrop = (accptedFiles: File[]) => {
     const fileUploaded = accptedFiles[0];
     if (fileUploaded) {
-      dispatch({type: ENABLE_ENCRYPT_BUTTON, payload: {fileUploaded}});
+      dispatch({type: ENABLE_BUTTONS, payload: {disabled: false, fileUploaded}});
     }
   };
   return (

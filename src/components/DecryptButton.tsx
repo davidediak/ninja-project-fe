@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Dispatch} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import {DO_DECRYPT, ReducersStates} from '../redux/types';
-import { StyledPrimaryButtonGroup } from './styled-components';
+import {DO_DECRYPT, ReducersStates, UiActionTypes} from '../redux/types';
+import {StyledPrimaryButtonGroup} from './styled-components';
 
 const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
   && {
@@ -11,13 +11,13 @@ const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
 `;
 
 export default function DecryptButton() {
-  const dispatch = useDispatch();
-  const disabled = useSelector<ReducersStates, boolean>(state => state.UI.disabled);
-  const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.fileUploaded);
+  const dispatch: Dispatch<UiActionTypes> = useDispatch();
+  const disabled = useSelector<ReducersStates, boolean>(state => state.UI.mainUI.disabled);
+  const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.mainUI.fileUploaded);
 
   const handleClick = () => {
     if (fileUploaded) {
-      dispatch({type: DO_DECRYPT, payload: {decryption: {fileToDecrypt: fileUploaded}}});
+      dispatch({type: DO_DECRYPT, payload: {fileToDecrypt: fileUploaded, key: null}});
     }
   };
 
