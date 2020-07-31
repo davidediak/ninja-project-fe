@@ -8,6 +8,8 @@ import {
   StyledTextField,
   StyledSectionColFlex,
 } from './styled-components';
+import {Snackbar} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 const aes256 = require('aes256');
 
 const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
@@ -22,6 +24,7 @@ export default function PostDecryption() {
     state => state.UI.decryption
   );
   const [key, setKey] = useState('');
+  const [error, setError] = React.useState({open: false, message: ''});
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setKey(event.target.value);
@@ -29,7 +32,12 @@ export default function PostDecryption() {
 
   const handleDownloadClick = () => {
     if (fileToDecrypt && key) {
-      decrypt(fileToDecrypt, atob(key));
+      try {
+        const keyDecoded = atob(key);
+        decrypt(fileToDecrypt, keyDecoded);
+      } catch (error) {
+        setError({open: true, message: `😢 There is some problems with the key you provided 🔑`});
+      }
     }
   };
 
@@ -37,9 +45,14 @@ export default function PostDecryption() {
     const reader = new FileReader();
     reader.readAsText(file, 'UTF-8');
     reader.onload = evt => {
-      const decrypted = aes256.decrypt(keyDecoded, evt.target.result);
-      const fileToDecrypt = new File([decrypted], file.name, {type: file.type});
-      download(fileToDecrypt);
+      let decrypted;
+      try {
+        decrypted = aes256.decrypt(keyDecoded, evt.target.result);
+        const fileToDecrypt = new File([decrypted], file.name, {type: file.type});
+        download(fileToDecrypt);
+      } catch (error) {
+        setError({open: true, message: `😢 There is some problems with the file you uploaded 📁`});
+      }
     };
   };
 
@@ -64,6 +77,14 @@ export default function PostDecryption() {
           Decrypt and download
         </CustStyledPrimaryButtonGroup>
       </ButtonContainer>
+      <Snackbar
+        open={error.open}
+        autoHideDuration={4000}
+        onClose={() => {
+          setError({...error, open: false});
+        }}>
+        <Alert severity="error">{error.message}</Alert>
+      </Snackbar>
     </Fragment>
   );
 }

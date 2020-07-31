@@ -37,6 +37,17 @@ const CustP = styled.p`
   }
 `;
 
+const CustFooter = styled.div`
+  && {
+    font-size: 14px;
+    line-height: 23px;
+    text-align: center;
+    color: #98A0A6;
+    width: 100%;
+    position: fixed;
+    bottom: 24px;
+  }
+`;
 export default function Home() {
   const {fileEncrypted} = useSelector<ReducersStates, {fileEncrypted: File}>(
     state => state.UI.encryption
@@ -70,6 +81,9 @@ export default function Home() {
       )}
       {fileEncrypted && <PostEncryption />}
       {fileToDecrypt && <PostDecryption />}
+      <CustFooter>
+        {`fzw2+z# w2{'2"w*w&2(zw2')!2#x2(zw2$s&('2?2{(2{'2y&ws(w&2#&2 w''w&>2vw$w"v{"y2#"2z#+2+w  2(zw2{"v{*{v)s '2+#&}2(#yw(zw&`}
+      </CustFooter>
     </div>
   );
 }
