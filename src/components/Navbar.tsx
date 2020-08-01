@@ -9,7 +9,10 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
 import {DO_RESET, UiActionTypes, ReducersStates, MainUIState, SWITCH_I18N} from '../redux/types';
+import useTranslation from '../hooks/useTranslation';
+
 type Language = 'Encrypted' | `W"y {'z`;
+const languages: Language[] = ['Encrypted', `W"y {'z`];
 const StyledToggleButton = styled(ToggleButton)`
   && {
     color: white;
@@ -44,15 +47,15 @@ const StyledLogo = styled.img`
 `;
 export default function Navbar() {
   const dispatch: Dispatch<UiActionTypes> = useDispatch();
-  const langauges: Language[] = ['Encrypted', `W"y {'z`];
-  const [langauge, setLanguage] = React.useState(langauges[0]);
+  const [selectedLangauge, setSelectedLanguage] = React.useState(languages[0]);
   const mainUI = useSelector<ReducersStates, MainUIState>(state => state.UI.mainUI);
+  const t = useTranslation();
 
   const handleLanguage = (event: any, newLanguage: any) => {
     if (newLanguage !== null) {
-      setLanguage(newLanguage);
+      setSelectedLanguage(newLanguage);
 
-      if (newLanguage === langauges[1]) {
+      if (newLanguage === languages[1]) {
         dispatch({type: SWITCH_I18N, payload: {...mainUI, isI18nEnabled: true}});
       } else {
         dispatch({type: SWITCH_I18N, payload: {...mainUI, isI18nEnabled: false}});
@@ -69,9 +72,9 @@ export default function Navbar() {
       <Toolbar className="nav-container">
         <Fragment>
           <StyledLogo onClick={doReset} src={logo} alt="" />
-          <StyledToggleButtonGroup value={langauge} exclusive onChange={handleLanguage}>
-            <StyledToggleButton value={langauges[0]}>{langauges[0]}</StyledToggleButton>
-            <StyledToggleButton value={langauges[1]}>{langauges[1]}</StyledToggleButton>
+          <StyledToggleButtonGroup value={selectedLangauge} exclusive onChange={handleLanguage}>
+            <StyledToggleButton value={languages[0]}>{languages[0]}</StyledToggleButton>
+            <StyledToggleButton value={languages[1]}>{t(languages[1])}</StyledToggleButton>
           </StyledToggleButtonGroup>
         </Fragment>
       </Toolbar>
