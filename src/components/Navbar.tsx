@@ -13,6 +13,7 @@ type Language = 'Encrypted' | `W"y {'z`;
 const StyledToggleButton = styled(ToggleButton)`
   && {
     color: white;
+    text-transform: none;
     border-radius: 2px;
     min-width: 120px;
     min-height: 40px;

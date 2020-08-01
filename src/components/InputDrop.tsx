@@ -38,6 +38,7 @@ const StyledButtonGroup = styled(ButtonGroup)`
 const StyledPrimaryButtonGroup = styled(Button)`
   && {
     width: 264px;
+    text-transform: none;
   }
 `;
 
