@@ -2,9 +2,10 @@ export interface ReducersStates {
   UI: UIState;
 }
 
-interface MainUIState {
+export interface MainUIState {
   disabled: boolean;
   fileUploaded: File;
+  isI18nEnabled: boolean;
 }
 
 interface EncryptionState {
@@ -22,12 +23,18 @@ export interface UIState {
   decryption: DecryptionState;
 }
 export const ENABLE_BUTTONS = 'ENABLE_BUTTONS';
+export const SWITCH_I18N = 'SWITCH_I18N';
 export const DO_ENCRYPT = 'DO_ENCRYPT';
 export const DO_DECRYPT = 'DO_DECRYPT';
 export const DO_RESET = 'DO_RESET';
 
 interface EnableButtonsActions {
   type: typeof ENABLE_BUTTONS;
+  payload: MainUIState;
+}
+
+interface SwitchI18nActions {
+  type: typeof SWITCH_I18N;
   payload: MainUIState;
 }
 
@@ -47,6 +54,7 @@ interface DoResetActions {
 
 export type UiActionTypes =
   | EnableButtonsActions
+  | SwitchI18nActions
   | DoEncryptionActions
   | DoDecryptionActions
   | DoResetActions;

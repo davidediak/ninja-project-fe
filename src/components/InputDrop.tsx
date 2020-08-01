@@ -6,8 +6,9 @@ import Dropzone from 'react-dropzone';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import filesIcon from '../assets/Files.svg';
-import {ENABLE_BUTTONS, ReducersStates, UiActionTypes} from '../redux/types';
+import {ENABLE_BUTTONS, ReducersStates, UiActionTypes, MainUIState} from '../redux/types';
 import {StyledSection} from './styled-components';
+import useTranslation from '../hooks/useTranslation';
 
 const StyledDropzoneContainer = styled.div`
   && {
@@ -73,12 +74,14 @@ const StyledIconUploaded = styled.img`
 
 export default function InputDrop() {
   const dispatch: Dispatch<UiActionTypes> = useDispatch();
-  const fileUploaded = useSelector<ReducersStates, File>(state => state.UI.mainUI.fileUploaded);
+  const mainUI = useSelector<ReducersStates, MainUIState>(state => state.UI.mainUI);
+  const fileUploaded = mainUI.fileUploaded;
+  const t = useTranslation();
 
   const handleDrop = (accptedFiles: File[]) => {
     const fileUploaded = accptedFiles[0];
     if (fileUploaded) {
-      dispatch({type: ENABLE_BUTTONS, payload: {disabled: false, fileUploaded}});
+      dispatch({type: ENABLE_BUTTONS, payload: {...mainUI, fileUploaded}});
     }
   };
   return (
@@ -96,7 +99,7 @@ export default function InputDrop() {
                         <StyledButtonGroup variant="contained">
                           <StyledPrimaryButtonGroup>
                             <StyledIcon src={filesIcon} alt="files icon" />
-                            {`Uz##'w2x{ w3`}
+                            {t(`Uz##'w2x{ w3`)}
                           </StyledPrimaryButtonGroup>
                           <Button size="small">
                             <ArrowDropDownIcon />

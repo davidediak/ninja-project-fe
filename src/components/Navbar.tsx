@@ -7,8 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import styled from 'styled-components';
-import {useDispatch} from 'react-redux';
-import {DO_RESET, UiActionTypes} from '../redux/types';
+import {useDispatch, useSelector} from 'react-redux';
+import {DO_RESET, UiActionTypes, ReducersStates, MainUIState, SWITCH_I18N} from '../redux/types';
 type Language = 'Encrypted' | `W"y {'z`;
 const StyledToggleButton = styled(ToggleButton)`
   && {
@@ -46,10 +46,17 @@ export default function Navbar() {
   const dispatch: Dispatch<UiActionTypes> = useDispatch();
   const langauges: Language[] = ['Encrypted', `W"y {'z`];
   const [langauge, setLanguage] = React.useState(langauges[0]);
+  const mainUI = useSelector<ReducersStates, MainUIState>(state => state.UI.mainUI);
 
   const handleLanguage = (event: any, newLanguage: any) => {
     if (newLanguage !== null) {
       setLanguage(newLanguage);
+
+      if (newLanguage === langauges[1]) {
+        dispatch({type: SWITCH_I18N, payload: {...mainUI, isI18nEnabled: true}});
+      } else {
+        dispatch({type: SWITCH_I18N, payload: {...mainUI, isI18nEnabled: false}});
+      }
     }
   };
 

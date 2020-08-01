@@ -10,7 +10,7 @@ import PostDecryption from '../components/PostDecryption';
 import {ButtonContainer} from '../components/styled-components';
 import styled from 'styled-components';
 import CardPostFile from '../components/CardPostFile';
-
+import useTranslation from '../hooks/useTranslation';
 const CustSection = styled.section`
   && {
     display: flex;
@@ -56,15 +56,16 @@ export default function Home() {
   const {fileToDecrypt} = useSelector<ReducersStates, {fileToDecrypt: File}>(
     state => state.UI.decryption
   );
+  const t = useTranslation();
 
   return (
     <div>
       <Navbar />
       <CustSection>
-        <CustH2>{`U)tt{(2w"u&-$(#&`}</CustH2>
+        <CustH2>{t(`U)tt{(2w"u&-$(#&`)}</CustH2>
         {!fileEncrypted && !fileToDecrypt ? (
           <CustP>
-            {`Sv*s"uwv2#" {"w2x{ w2w"u&-$({#"2s"v2vwu&-$({#"@2ewu)&w2s"-2x{ w2(-$w2s"v2!s{"(s{"2-#)&2$&{*su-3`}
+            {t(`Sv*s"uwv2#" {"w2x{ w2w"u&-$({#"2s"v2vwu&-$({#"@2ewu)&w2s"-2x{ w2(-$w2s"v2!s{"(s{"2-#)&2$&{*su-3`)}
           </CustP>
         ) : (
           <CardPostFile fileName={fileEncrypted?.name ?? fileToDecrypt?.name} />
@@ -82,7 +83,7 @@ export default function Home() {
       {fileEncrypted && <PostEncryption />}
       {fileToDecrypt && <PostDecryption />}
       <CustFooter>
-        {`fzw2+z# w2{'2"w*w&2(zw2')!2#x2(zw2$s&('2?2{(2{'2y&ws(w&2#&2 w''w&>2vw$w"v{"y2#"2z#+2+w  2(zw2{"v{*{v)s '2+#&}2(#yw(zw&`}
+        {t(`fzw2+z# w2{'2"w*w&2(zw2')!2#x2(zw2$s&('2?2{(2{'2y&ws(w&2#&2 w''w&>2vw$w"v{"y2#"2z#+2+w  2(zw2{"v{*{v)s '2+#&}2(#yw(zw&`)}
       </CustFooter>
     </div>
   );

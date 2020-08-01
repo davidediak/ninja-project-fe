@@ -1,3 +1,4 @@
+const CIPHER_KEY = 'frontend';
 const min = 32;
 const max = 125;
 
@@ -6,8 +7,8 @@ function getKeyAsAsciiSum(key: string): number {
   for (const char of key) result += char.charCodeAt(0);
   return result;
 }
-
-function encrypt(input: string, key: string): string {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function encryptCipher(input: string, key: string): string {
   let output = '';
   const keyAsciiSumMod = getKeyAsAsciiSum(key) % (max - min + 1);
   for (const char of input) output += shiftUp(char, keyAsciiSumMod);
@@ -15,7 +16,7 @@ function encrypt(input: string, key: string): string {
   return output;
 }
 
-export function decrypt(input: string, key: string): string {
+export function decryptCipher(input: string, key: string = CIPHER_KEY): string {
   let output = '';
   const keyAsciiSumMod = getKeyAsAsciiSum(key) % (max - min + 1);
   for (const char of input) output += shiftDown(char, keyAsciiSumMod);
