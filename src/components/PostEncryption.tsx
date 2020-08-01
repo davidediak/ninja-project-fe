@@ -14,7 +14,7 @@ const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
 const StyledCopyButton = styled(StyledBasedButton)`
   && {
     background: #009eff;
-    width: 116px;
+    max-width: 116px;
     height: 36px;
     margin: 6px;
   }

@@ -32,7 +32,7 @@ const CustH2 = styled.h2`
 
 const CustP = styled.p`
   && {
-    width: 552px;
+    max-width: 552px;
     text-align: center;
   }
 `;

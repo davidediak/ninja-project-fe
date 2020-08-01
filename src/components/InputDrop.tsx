@@ -91,7 +91,7 @@ export default function InputDrop() {
           <StyledSection>
             <StyledDropzoneContainer>
               <StyledInputContainer {...getRootProps()}>
-                <input {...getInputProps()} />
+                <input {...getInputProps()}  accept="text/plain"/>
                 {
                   <Fragment>
                     {!fileUploaded ? (
