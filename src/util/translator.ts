@@ -8,21 +8,34 @@ function getKeyAsAsciiSum(key: string): number {
   return result;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function encryptCipher(input: string, key: string): string {
-  let output = '';
-  const keyAsciiSumMod = getKeyAsAsciiSum(key) % (max - min + 1);
-  for (const char of input) output += shiftUp(char, keyAsciiSumMod);
+const encryptCipher = (input: string, key = CIPHER_KEY): string =>
+  commonAlgorithm(input, key, shiftUp);
 
-  return output;
+export const decryptCipher = (input: string, key = CIPHER_KEY): string =>
+  commonAlgorithm(input, key, shiftDown);
+
+function commonAlgorithm(
+  input: string,
+  key: string,
+  operation: (char: string, keySum: number) => string
+): string {
+  const keyAsciiSumMod = getKeyAsAsciiSum(key) % (max - min + 1);
+  // splits string into `key.length` chunks
+  const regex = new RegExp(`.{1,${key.length}}`, 'g');
+  const chunks: string[] = input.match(regex);
+  let decryptedChunks: string[] = [];
+
+  for (const chunk of chunks) {
+    const chunkReversed = reverseChunk(chunk);
+    let decryptedChunk = '';
+    for (const char of chunkReversed) decryptedChunk += operation(char, keyAsciiSumMod);
+    decryptedChunk = reverseChunk(decryptedChunk);
+    decryptedChunks = [...decryptedChunks, decryptedChunk];
+  }
+  return decryptedChunks.join('');
 }
 
-export function decryptCipher(input: string, key: string = CIPHER_KEY): string {
-  let output = '';
-  const keyAsciiSumMod = getKeyAsAsciiSum(key) % (max - min + 1);
-  for (const char of input) output += shiftDown(char, keyAsciiSumMod);
-
-  return output;
-}
+const reverseChunk = (chunk: string): string => chunk.split('').reverse().join('');
 
 function shiftUp(char: string, keyAsciiSumMod: number): string {
   const charCode = char.charCodeAt(0);
@@ -46,5 +59,5 @@ function shiftDown(char: string, keyAsciiSumMod: number): string {
   }
 }
 
-// console.log(encrypt('titanic', 'frontend'));
-// console.log(decrypt('({(s"{u', 'frontend'));
+// console.log(encryptCipher('titanic', 'frontend'));
+// console.log(decryptCipher('({(s"{u', 'frontend'));
