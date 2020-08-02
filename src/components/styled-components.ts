@@ -43,17 +43,24 @@ export const StyledPrimaryButtonGroup = styled(StyledBasedButton)`
   }
 `;
 
+export const TextFieldContainer = styled.div`
+  && {
+    width: 100%;
+    max-width: 540px;
+  }
+`;
+
 export const StyledTextField = styled(TextField)`
   && {
     background: #292929;
     border: 1px solid #363636;
     box-sizing: border-box;
     border-radius: 3px;
+    width: 100%;
 
     & > div {
       padding: 0px;
       color: #ffffff;
-      width: 552px;
       height: 48px;
       & > input {
         font-size: 14px;

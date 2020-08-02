@@ -8,7 +8,8 @@ const CustCard = styled.div`
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 552px;
+    max-width: 552px;
+    width: 100%;
     height: 120px;
     border: 1px solid #363636;
     box-sizing: border-box;

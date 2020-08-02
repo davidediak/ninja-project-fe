@@ -3,12 +3,19 @@ import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {ReducersStates} from '../redux/types';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {ButtonContainer, StyledPrimaryButtonGroup, StyledTextField, StyledBasedButton, StyledSectionColFlex} from './styled-components';
+import {
+  ButtonContainer,
+  StyledPrimaryButtonGroup,
+  StyledTextField,
+  TextFieldContainer,
+  StyledBasedButton,
+  StyledSectionColFlex,
+} from './styled-components';
 
 const CustStyledPrimaryButtonGroup = styled(StyledPrimaryButtonGroup)`
-&& {
-  background: #ffa047;
-}
+  && {
+    background: #ffa047;
+  }
 `;
 
 const StyledCopyButton = styled(StyledBasedButton)`
@@ -40,22 +47,22 @@ export default function PostEncryption() {
   return (
     <Fragment>
       <StyledSectionColFlex>
-        <p>
-        Your encryption key:
-        </p>
-        <StyledTextField
-          variant="outlined"
-          id="key"
-          value={keyEncoded}
-          disabled={true}
-          InputProps={{
-            endAdornment: (
-              <CopyToClipboard text={keyEncoded}>
-                <StyledCopyButton>Copy</StyledCopyButton>
-              </CopyToClipboard>
-            ),
-          }}
-        />
+        <p>Your encryption key:</p>
+        <TextFieldContainer>
+          <StyledTextField
+            variant="outlined"
+            id="key"
+            value={keyEncoded}
+            disabled={true}
+            InputProps={{
+              endAdornment: (
+                <CopyToClipboard text={keyEncoded}>
+                  <StyledCopyButton>Copy</StyledCopyButton>
+                </CopyToClipboard>
+              ),
+            }}
+          />
+        </TextFieldContainer>
       </StyledSectionColFlex>
       <ButtonContainer>
         <CustStyledPrimaryButtonGroup onClick={handleDownloadClick}>

@@ -7,6 +7,7 @@ import {
   StyledPrimaryButtonGroup,
   StyledTextField,
   StyledSectionColFlex,
+  TextFieldContainer,
 } from './styled-components';
 import {Snackbar} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -77,7 +78,9 @@ export default function PostDecryption() {
     <Fragment>
       <StyledSectionColFlex>
         <p>Insert your key:</p>
-        <StyledTextField variant="outlined" id="key" value={key} onChange={onChange} />
+        <TextFieldContainer>
+          <StyledTextField variant="outlined" id="key" value={key} onChange={onChange} />
+        </TextFieldContainer>
       </StyledSectionColFlex>
       <ButtonContainer>
         <CustStyledPrimaryButtonGroup onClick={handleDownloadClick}>
